@@ -15,26 +15,27 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
-@Accessors(chain=true)
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Entity
-@Table(name="Users")
+// we specify table name because we can't have an user table in psql
+@Table(name = "Users")
 public class User extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id ;
-	
+	private Long id;
+
 	private String oauthId;
-	private String username ;
+	private String username;
 	private String email;
-	private String password ;
+	private String password;
 	private String firstname;
-	private String lastname ;
+	private String lastname;
 	private String picture = "https://i.imgur.com/yfGGq35.png";
-	private boolean enabled = true ;
-	private UserOrigin origin ;
+	private boolean enabled = true;
+	private UserOrigin origin;
 	@ManyToMany
-	private Set<Role> roles ;
+	private Set<Role> roles;
 }

@@ -1,62 +1,85 @@
 package com.miage.spring.service.implement;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.miage.spring.model.Role;
 import com.miage.spring.model.User;
+import com.miage.spring.repository.RoleRepository;
+import com.miage.spring.repository.UserRepository;
 import com.miage.spring.service.UserService;
+
 @Service
 public class UserServiceImpl implements UserService {
-		
-	private 
+
+	private UserRepository userRepository;
+	private RoleRepository roleRepository;
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+			@Lazy BCryptPasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
+
 	@Override
 	public User save(User user) {
-		// TODO Auto-generated method stub
+		// user.
 		return null;
 	}
 
 	@Override
 	public User getOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getOne(id);
 	}
 
 	@Override
 	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.findAll();
 	}
 
 	@Override
 	public User eagerFindByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.eagerFindByEmail(email);
 	}
 
 	@Override
 	public Set<User> getAllProjectReaders(Long projectId) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllProjectReaders(projectId);
 	}
 
 	@Override
 	public Set<User> getAllProjectWriters(Long projectId) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllProjectWriters(projectId);
 	}
 
 	@Override
 	public Set<User> getAllTopicReaders(Long topicId) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllTopicReaders(topicId);
 	}
 
 	@Override
 	public Set<User> getAllTopicWriters(Long topicId) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllTopicWriters(topicId);
+	}
+
+	private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
+		List<GrantedAuthority> authorities = new ArrayList<>(roles.size());
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getRole()));
+		}
+		return authorities;
 	}
 
 }
