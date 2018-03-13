@@ -1,5 +1,6 @@
 package com.miage.spring.config;
 
+import org.apache.tomcat.jni.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -16,8 +17,11 @@ public class PersistConfig {
 		return () -> {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-				
+				MyPrincipal principal = (MyPrincipal) authentication.getPrincipal();
+				return new User();
 			}
-		}
+			//will be System account created in seeder
+			return new User();
+		};
 	}
 }

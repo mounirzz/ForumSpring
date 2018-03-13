@@ -1,5 +1,13 @@
 package com.miage.spring.config;
 
-public class MyPrincipal {
+public interface MyPrincipal {
+	Long getId();
 
+	String getName();
+
+	String getEmail();
+
+	boolean isAdmin();
+
+	boolean isFromDB();
 }
