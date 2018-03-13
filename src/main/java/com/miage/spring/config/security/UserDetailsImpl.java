@@ -42,7 +42,7 @@ public class UserDetailsImpl extends User implements MyPrincipal {
 		return false;
 	}
 	public UserDetailsImpl(User user,Collection<? extends GrantedAuthority> authorities) {
-		super();
+		super(user.);
 		this.id = id;
 		this.name = name;
 		this.email = email;
