@@ -61,13 +61,13 @@ public class HasPermissions extends Auditable {
 			return writers.isEmpty() || writers.contains(userId);
 	}
 		/**
-		 * An user ca reas an entity with Permissions if :
-		 * he is anonymous ans anonymousCanAccess is true or he is in Readers or readers is empty 
+		 * An user can read an entity with Permissions if :
+		 * he is anonymous and anonymousCanAccess is true or he is in Readers or readers is empty 
 		 * first check reads as : if your are connected or anonymousCanAccess 
-		 * Of course if Readers is not empty anonymous can't acess because it's stupid to restrict users but not anonymous.
+		 * Of course if Readers is not empty anonymous can't access because it's stupid to restrict users but not anonymous.
 		 */
 		public boolean canRead(Long userId) {
-			return (userId!=null || isAnonymousCanAccess()) && (readers.isEmpty() || readers.contains(userId));
+			return (userId !=null || anonymousCanAccess) && (readers.isEmpty() || readers.contains(userId));
 		}
 		public boolean hasPermission(Long userId, Permission permission) {
 			boolean canRead = canRead(userId);
