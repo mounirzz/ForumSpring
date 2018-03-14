@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 
 import com.miage.spring.model.Post;
+import com.miage.spring.model.Topic;
+import com.miage.spring.model.User;
 import com.miage.spring.repository.TopicRepository;
 import com.miage.spring.service.MailService;
 
@@ -27,7 +29,8 @@ public class MailServiceImpl implements MailService {
 	@Transactional(readOnly = true)
 	public void sendNotifToAllFollowers(Post post) {
 		// TODO Auto-generated method stub
-		
+		Topic topic = topicRepository.eagerWithFollowers(post);
+		User auth = post.get
 	}
 
 }
