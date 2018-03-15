@@ -33,20 +33,18 @@ public class UserDetailsImpl extends org.springframework.security.core.userdetai
 	}
 	@Override
 	public boolean isAdmin() {
-		// TODO Auto-generated method stub
-		return false;
+		return getAuthorities().stream().anyMatch(authority->authority.getAuthority().equals("ROLE_ADMIN"));
 	}
 	@Override
 	public boolean isFromDB() {
-		// TODO Auto-generated method stub
-		return false;
+		return origin.equals(UserOrigin.DB);
 	}
 	public UserDetailsImpl(User user,Collection<? extends GrantedAuthority> authorities) {
-		super(user.);
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.origin = origin;
+		super(user.getUsername(), user.getPassword(), authorities);
+		this.id = user.getId();
+		this.name = user.getUsername();
+		this.email = user.getEmail();
+		this.origin = user.getOrigin();
 	}
 
 
