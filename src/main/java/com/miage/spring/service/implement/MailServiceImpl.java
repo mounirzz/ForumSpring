@@ -1,8 +1,12 @@
 package com.miage.spring.service.implement;
 
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
@@ -28,8 +32,32 @@ public class MailServiceImpl implements MailService {
 	@Override
 	@Transactional(readOnly = true)
 	public void sendNotifToAllFollowers(Post post) {
-		Topic topic = topicRepository.eagerWithFollowers(post.);
-		User auth = post.
+		Topic topic = topicRepository.eagerWithFollowers(post.getTopic().getId());
+		User author = post.getCreatedBy();
+		Set<User> followers = topic.getFollowers();
+		if (followers != null && !followers.isEmpty()) {
+			followers.forEach(follower -> sendNotifEmail(follower, author, topic, post));
+		}
+	}
+	/**
+	 * Method that send an email to a user, about a new post in a topic
+	 */
+	
+	/**
+	 * 
+	 * @param user
+	 * @param author
+	 * @param topic
+	 * @param post
+	 */
+	private void sendNotifEmail(User user, User author,Topic topic,Post post) {
+		//Don't send email to creator
+		if (user.getEmail().equals(author.getEmail())) {
+			return;
+		}
+		MimeMessagePreparator messagePreparator= mimeMessage ->{
+			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+		}
 	}
 
 }

@@ -49,5 +49,29 @@ public class Topic extends HasPermissions implements Serializable {
 	public boolean removeFollewer(User user) {
 		return this.followers.remove(user);
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public Set<User> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(Set<User> followers) {
+		this.followers = followers;
+	}
 	
 }

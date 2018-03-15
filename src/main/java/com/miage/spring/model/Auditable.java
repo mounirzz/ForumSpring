@@ -40,4 +40,36 @@ public class Auditable implements Serializable {
 
 	@LastModifiedDate
 	private Date updatedAt;
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getModifiesBy() {
+		return modifiesBy;
+	}
+
+	public void setModifiesBy(User modifiesBy) {
+		this.modifiesBy = modifiesBy;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 }
