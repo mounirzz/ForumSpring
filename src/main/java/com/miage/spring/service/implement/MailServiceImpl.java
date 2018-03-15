@@ -28,9 +28,8 @@ public class MailServiceImpl implements MailService {
 	@Override
 	@Transactional(readOnly = true)
 	public void sendNotifToAllFollowers(Post post) {
-		// TODO Auto-generated method stub
-		Topic topic = topicRepository.eagerWithFollowers(post);
-		User auth = post.get
+		Topic topic = topicRepository.eagerWithFollowers(post.);
+		User auth = post.
 	}
 
 }

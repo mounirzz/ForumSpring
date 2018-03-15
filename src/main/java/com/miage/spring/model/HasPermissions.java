@@ -20,9 +20,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
-public class HasPermissions extends Auditable {
-	protected boolean anonymousCanAccess = true;
+public abstract class HasPermissions extends Auditable {
 
+	protected boolean anonymousCanAccess = true;
 	@ElementCollection
 	private Set<Long> readers = new HashSet<>();
 	@ElementCollection
@@ -53,33 +53,37 @@ public class HasPermissions extends Auditable {
 		}
 		return result;
 	}
+
 	/**
-	 * An user can write an entity with Permissions if :
-	 * he is in writers or writers is empty
+	 * An user can write an entity with Permissions if : he is in writers or writers
+	 * is empty
 	 */
-		public boolean canWrite(Long userId) {
-			return writers.isEmpty() || writers.contains(userId);
+	public boolean canWrite(Long userId) {
+		return writers.isEmpty() || writers.contains(userId);
 	}
-		/**
-		 * An user can read an entity with Permissions if :
-		 * he is anonymous and anonymousCanAccess is true or he is in Readers or readers is empty 
-		 * first check reads as : if your are connected or anonymousCanAccess 
-		 * Of course if Readers is not empty anonymous can't access because it's stupid to restrict users but not anonymous.
-		 */
-		public boolean canRead(Long userId) {
-			return (userId !=null || isanonymousCanAccess()) && (readers.isEmpty() || readers.contains(userId));
+
+	/**
+	 * An user can read an entity with Permissions if : he is anonymous and
+	 * anonymousCanAccess is true or he is in Readers or readers is empty first
+	 * check reads as : if your are connected or anonymousCanAccess Of course if
+	 * Readers is not empty anonymous can't access because it's stupid to restrict
+	 * users but not anonymous.
+	 */
+	public boolean canRead(Long userId) {
+		return (userId != null || isAnonymousCanAccess()) && (readers.isEmpty() || readers.contains(userId));
+	}
+
+	public boolean hasPermission(Long userId, Permission permission) {
+		boolean canRead = canRead(userId);
+		boolean canWrite = canWrite(userId);
+
+		if (permission == Permission.READ) {
+			return canRead;
 		}
-		public boolean hasPermission(Long userId, Permission permission) {
-			boolean canRead = canRead(userId);
-			boolean canWrite = canWrite(userId);
-			
-			if (permission == Permission.READ) {
-				return canRead ;
-			}
-			if (permission == Permission.WRITE) {
-				return canWrite ;
-			}
-			return permission == Permission.ALL && canRead && canWrite;
-			
+		if (permission == Permission.WRITE) {
+			return canWrite;
 		}
+		return permission == Permission.ALL && canRead && canWrite;
+
+	}
 }

@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 
 /**
  * Auditable is an abstract class for Post, Topic and Project (HasPermission
- * Classes) It is used to register the creation and modification of tese
+ * Classes) It is used to register the creation and modification of these
  * entities
  */
 @Data

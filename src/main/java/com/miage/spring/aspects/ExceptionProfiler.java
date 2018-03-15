@@ -4,7 +4,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Aspect
@@ -12,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExceptionProfiler {
 
-	@Around("@annotation(LogExceptionTime)")
+	@Around("@annotation(com.miage.spring.aspects.LogExceptionTime)")
 	public Object logExceptionTime(ProceedingJoinPoint joinPoint) throws Throwable{
 		Long start = System.currentTimeMillis();
 		Object procced = joinPoint.proceed();

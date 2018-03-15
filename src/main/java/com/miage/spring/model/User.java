@@ -47,4 +47,5 @@ public class User extends Auditable implements Serializable {
 	
 	@ManyToMany
 	private Set<Role> roles;
+
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.miage.spring.config.security.UserDetailsImpl;
 import com.miage.spring.model.Role;
 import com.miage.spring.model.User;
 import com.miage.spring.repository.RoleRepository;
@@ -80,6 +81,12 @@ public class UserServiceImpl implements UserService {
 			authorities.add(new SimpleGrantedAuthority(role.getRole()));
 		}
 		return authorities;
+	}
+
+	@Override
+	public UserDetailsImpl getUserDetails(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
