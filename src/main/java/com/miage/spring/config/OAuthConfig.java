@@ -1,5 +1,7 @@
 package com.miage.spring.config;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

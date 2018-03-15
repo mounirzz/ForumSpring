@@ -67,7 +67,7 @@ public class HasPermissions extends Auditable {
 		 * Of course if Readers is not empty anonymous can't access because it's stupid to restrict users but not anonymous.
 		 */
 		public boolean canRead(Long userId) {
-			return (userId !=null || anonymousCanAccess) && (readers.isEmpty() || readers.contains(userId));
+			return (userId !=null || isanonymousCanAccess()) && (readers.isEmpty() || readers.contains(userId));
 		}
 		public boolean hasPermission(Long userId, Permission permission) {
 			boolean canRead = canRead(userId);
