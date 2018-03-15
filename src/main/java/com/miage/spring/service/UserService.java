@@ -3,6 +3,7 @@ package com.miage.spring.service;
 import java.util.List;
 import java.util.Set;
 
+import com.miage.spring.config.security.UserDetailsImpl;
 import com.miage.spring.model.User;
 
 public interface UserService {
@@ -13,7 +14,7 @@ public interface UserService {
 
 	List<User> getAll();
 
-	// UserDetailsImpl getUserDetails(User user);
+	UserDetailsImpl getUserDetails(User user);
 	User eagerFindByEmail(String email);
 
 	Set<User> getAllProjectReaders(Long projectId);

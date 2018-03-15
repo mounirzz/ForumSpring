@@ -8,7 +8,7 @@ import com.miage.spring.config.MyPrincipal;
 import com.miage.spring.model.User;
 import com.miage.spring.model.UserOrigin;
 
-public class UserDetailsImpl extends User implements MyPrincipal {
+public class UserDetailsImpl extends org.springframework.security.core.userdetails.User implements MyPrincipal {
 
 	private Long id; 
 	private String name ; 

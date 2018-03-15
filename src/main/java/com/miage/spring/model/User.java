@@ -28,14 +28,23 @@ public class User extends Auditable implements Serializable {
 	private Long id;
 
 	private String oauthId;
+	
 	private String username;
+	
 	private String email;
+	
 	private String password;
+	
 	private String firstname;
+	
 	private String lastname;
+	
 	private String picture = "https://i.imgur.com/yfGGq35.png";
+	
 	private boolean enabled = true;
+	
 	private UserOrigin origin;
+	
 	@ManyToMany
 	private Set<Role> roles;
 }
