@@ -2,11 +2,13 @@ package com.miage.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jms.annotation.EnableJms;
 
 @SpringBootApplication
-public class ForumSpringApplication {
+@EnableJms
+public class ForumApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ForumSpringApplication.class, args);
+		SpringApplication.run(ForumApplication.class, args);
 	}
 }
