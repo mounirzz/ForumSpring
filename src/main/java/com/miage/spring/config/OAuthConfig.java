@@ -47,13 +47,15 @@ public class OAuthConfig {
 	public PrincipalExtractor principalExtractor() {
 		return map ->{
 			String oauthId= (String) map.get("sub");
+			 
 			User user = userRepository.eagerFindByOauthId(oauthId);
 			if(user == null) {
 				log.info("Mapping google user and saving it to DB");
 				user = new User();
 				Role userRole = roleRepository.findByRole("ROLE_USER");
-				user.setEmail((String) map.get("email")).setOauthId(oauthId).setUsername((String) map.get("name"))
-				.setFirstname((String) map.get("given_name")).setLastname((String) map.get("family_name"))
+				user.setEmail((String) map.get("email")).setOauthId("admin").setUsername((String) map.get("name"))
+				.setFirstname((String) map.get("given_name"))
+				.setLastname((String) map.get("family_name"))
 				.setPicture((String) map.get("picture"))
 				.setRoles(Sets.newHashSet(userRole))
 				.setOrigin(UserOrigin.GOOGLE);
@@ -64,7 +66,7 @@ public class OAuthConfig {
 			}
 		
 		User saved = userRepository.save(user);
-		saved.setPassword("");
+		saved.setPassword("");// To prevent error with UserDetails super() call
 		return new UserDetailsImpl(saved, getAuthorities(saved.getRoles()));
 		
 	};

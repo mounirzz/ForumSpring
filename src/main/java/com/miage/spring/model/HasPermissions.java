@@ -70,7 +70,7 @@ public abstract class HasPermissions extends Auditable {
 	 * users but not anonymous.
 	 */
 	public boolean canRead(Long userId) {
-		return (userId != null || isAnonymousCanAccess()) && (readers.isEmpty() || readers.contains(userId));
+		return (userId != null || anonymousCanAccess) && (readers.isEmpty() || readers.contains(userId));
 	}
 
 	public boolean hasPermission(Long userId, Permission permission) {
