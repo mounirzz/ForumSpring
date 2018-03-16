@@ -33,10 +33,7 @@ security:
       access-token-uri: https://accounts.google.com/o/oauth2/token
       user-authorization-uri: https://accounts.google.com/o/oauth2/auth
       client-authentication-scheme: form
-      scope:
-          - openid
-          - email
-          - profile
+      scope: openid-email-profile
     resource:
       user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
       prefer-token-info: false
