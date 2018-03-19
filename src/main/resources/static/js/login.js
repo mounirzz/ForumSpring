@@ -5,6 +5,5 @@
 	loginBtn.addEventListener('click', () => {
 		loginForm.submit()
 	})
-	
 })()
 
