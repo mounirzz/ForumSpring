@@ -2,6 +2,7 @@ package com.miage.spring.service.implement;
 
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +31,7 @@ public class MailServiceImpl implements MailService {
 	private JavaMailSender sender;
 	@Autowired
 	private TemplateEngine templateEngine;
+	private Log log;
 
 	@Override
 	@Transactional(readOnly = true)

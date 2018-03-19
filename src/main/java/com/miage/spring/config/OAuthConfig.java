@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogConfigurationException;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 public class OAuthConfig {
-
+	private Log log;
 	private UserRepository userRepository ;
 	private RoleRepository roleRepository ;
 	@Autowired
@@ -54,7 +56,7 @@ public class OAuthConfig {
 				log.info("Mapping google user and saving it to DB");
 				user = new User();
 				Role userRole = roleRepository.findByRole("ROLE_USER");
-				user.setEmail((String) map.get("email")).setOauthId("admin").setUsername((String) map.get("name"))
+				user.setEmail((String) map.get("email")).setOauthId((String) map.get("sub")).setUsername((String) map.get("name"))
 				.setFirstname((String) map.get("given_name"))
 				.setLastname((String) map.get("family_name"))
 				.setPicture((String) map.get("picture"))
