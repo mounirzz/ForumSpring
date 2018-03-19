@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout}">
+<body>
+<section class="section" layout:fragement="content">
+	<div class="container">
+		<h1 class="title" th:text="#{projects}"></h1>
+		<a class="button is-default is-primary" sec:authorize="hasRole('ADMIN')" th:text="#{project.create}
+		th:href="@{/project/create}"></a>
+		<section class="mt-6">
+				<article th:each="project :${projects}" class="media">
+						<div class="media-content">
+						<div class="content">
+							<p>
+								<a class="has-text-dark" th:href="@{/project/{id}(id=${project.id})}">
+									<strong th:text="${project.name}">Project Name</strong>
+								</a>
+								<small th:inline="text"> Créer par [[${project.createdBy.username}]]</small>
+								<small th:inline="text">Le [[${project.createdAt.toLocaleString()}]]</small>
+							</p>
+						</div>
+						<nav class="level is-mobile">
+							<div class="level-left">
+							<a class="level-item">
+								<a sec:authorize="isAuthenticated() and (hasRole('ADMIN') or Principal.id == #vars.project.getCreatedBy().getId())" th:href="@{/project/{id}/edit(id=${project.id})}">
+										<span class="icon is-medium has-text-info"><i class="far fa-lg fa-edit"></i></span>
+								</a>
+								</a>
+									</div>
+						</nav>
+						</div>
+				</article>
+		</section>
+	</div>
+</section>
+
+</body>
+</html>
