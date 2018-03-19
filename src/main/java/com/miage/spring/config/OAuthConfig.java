@@ -56,12 +56,13 @@ public class OAuthConfig {
 				log.info("Mapping google user and saving it to DB");
 				user = new User();
 				Role userRole = roleRepository.findByRole("ROLE_USER");
-				user.setEmail((String) map.get("email")).setOauthId((String) map.get("sub")).setUsername((String) map.get("name"))
+			/*	user.setEmail((String) map.get("email"))
+				.setOauthId((String) map.get("sub")).setUsername((String) map.get("name"))
 				.setFirstname((String) map.get("given_name"))
 				.setLastname((String) map.get("family_name"))
 				.setPicture((String) map.get("picture"))
 				.setRoles(Sets.newHashSet(userRole))
-				.setOrigin(UserOrigin.GOOGLE);
+				.setOrigin(UserOrigin.GOOGLE);*/
 			}else {
 				log.info("Google auth exixsting user found, updating profile pic");
 				// we will update picture every time to make sure our data is fresh
