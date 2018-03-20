@@ -47,7 +47,7 @@ public class OAuthConfig {
 	 * (and also decoupling from Spring Security).
 	 */
 	@Bean
-	public PrincipalExtractor principalExtractor() {
+	public PrincipalExtractor principalExtractor(UserRepository userRepository) {
 		return map ->{
 			String oauthId= (String) map.get("sub");
 			 
@@ -56,13 +56,14 @@ public class OAuthConfig {
 				log.info("Mapping google user and saving it to DB");
 				user = new User();
 				Role userRole = roleRepository.findByRole("ROLE_USER");
-				user.setEmail((String) map.get("email"))
-				.setOauthId((String) map.get("sub")).setUsername((String) map.get("name"))
-				.setFirstname((String) map.get("given_name"))
-				.setLastname((String) map.get("family_name"))
-				.setPicture((String) map.get("picture"))
-				.setRoles(Sets.newHashSet(userRole))
-				.setOrigin(UserOrigin.GOOGLE);
+				user.setEmail((String) map.get("email"));
+				user.setOauthId(oauthId);
+				user.setUsername((String) map.get("name"));
+				user.setFirstname((String) map.get("given_name"));
+				user.setLastname((String) map.get("family_name"));
+				user.setPicture((String) map.get("picture"));
+				user.setRoles(Sets.newHashSet(userRole));
+				user.setOrigin(UserOrigin.GOOGLE);
 			}else {
 				log.info("Google auth exixsting user found, updating profile pic");
 				// we will update picture every time to make sure our data is fresh
@@ -75,6 +76,7 @@ public class OAuthConfig {
 		
 	};
 }
+	
 	private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles){
 		List<GrantedAuthority> authorities = new ArrayList<>(roles.size());
 		for(Role role : roles) {
