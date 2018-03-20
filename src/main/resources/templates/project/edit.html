@@ -1,0 +1,136 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<body>
+<section class="section" layout:fragment="content">
+  <input id="idProject" type="hidden" th:value="${project.id}"/>
+
+  <div class="container">
+    <a th:href="@{/project/{id}(id=${project.id})}">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16" class="forum-back-arrow">
+        <path d="M6 3L0 8l6 5v-3h4V6H6z"></path>
+      </svg>
+    </a>
+
+    <h1 class="title" th:text="#{project}"></h1>
+    <h2 class="subtitle" th:text="${project.name}"></h2>
+
+    <hr>
+
+    <section class="mini-section">
+      <h2 class="title is-3" th:text="#{project.general_info}"></h2>
+      <form th:action="@{/project/{id}(id=${project.id})}"
+            th:object="${project}"
+            th:method="PUT">
+
+        <div class="field">
+          <label class="label" th:text="#{project.name}">Label</label>
+          <div class="control">
+            <input class="input" type="text" th:field="${project.name}"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="checkbox" th:inline="text">
+              <input type="checkbox" th:checked="${project.anonymousCanAccess}" th:field="${project.anonymousCanAccess}">
+              [[#{authorizeAnonymousAccess}]]
+            </label>
+          </div>
+        </div>
+
+        <button class="button is-primary" type="submit" th:text="#{project.submit}"></button>
+      </form>
+    </section>
+
+    <section class="mini-section">
+      <h2 class="title is-3" th:text="#{project.permission_info}"></h2>
+      <div class="columns">
+        <div class="column is-narrow">
+          <div class="control">
+            <label class="label">Droit</label>
+            <div class="select">
+              <select id="selectPermission">
+                <option value="READ" th:text="#{read}">Lecture</option>
+                <option value="WRITE" th:text="#{write}">Ecriture</option>
+                <option value="ALL" th:text="#{all}">Tout</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-narrow">
+          <div class="control">
+            <label class="label">Utilisateur</label>
+            <div class="select">
+              <select id="selectUser">
+                <option th:each="user : ${users}"
+                        th:value="${user.id}"
+                        th:text="${user.username}">
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-narrow">
+          <div class="control">
+            <button id="addPermProjectBtn" class="button is-primary"
+                    th:text="#{project.submit}"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="mini-section">
+      <h2 class="title is-3">Droits actuels</h2>
+
+      <div class="columns">
+        <div class="column">
+          <h3 class="heading">Readers</h3>
+          <table id="projectReadersTable" class="table is-fullwidth">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th th:width="80px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            </tr>
+            <tr th:data-user-id="${user.id}" th:each="user : ${usersReader}">
+              <td th:text="${user.username}"></td>
+              <td class="deleteReadPermission" th:data-user-id="${user.id}" th:width="80px">
+                <i class="fas fa-trash has-text-danger is-clickable is-size-5"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="column">
+          <h3 class="heading">Writers</h3>
+          <table id="projectWritersTable" class="table is-fullwidth">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th th:width="80px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr></tr>
+            <tr th:data-user-id="${user.id}" th:each="user : ${usersWriter}">
+              <td th:text="${user.username}"></td>
+              <td class="deleteWritePermission" th:data-user-id="${user.id}" th:width="80px">
+                <i class="fas fa-trash has-text-danger is-clickable is-size-5"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+</body>
+</html>
