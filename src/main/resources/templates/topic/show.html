@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+ <body>
+ <section>
+ 	<inout type="hidden" th:value="${topic.id}" id="idTopic">
+ 	<div class="container">
+ 			<a th:href="@{/project/{id}(id=${topic.project.id})}">
+ 			   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16" class="forum-back-arrow">
+     				   <path d="M6 3L0 8l6 5v-3h4V6H6z"></path>
+   			  </svg>
+ 			</a>
+ 			<h1 class="title" th:text="${topic.title}"></h1>
+ 			<h2 class="subtitle"> <span th:text="#{project}"></span> :<span th:text="${topic.project.name}"></span></h2>
+			 <a class="button is-primary" th:text="#{post.new}" th:href="@{/topic/{id}/post/create(id=${topic.id})}"></a>
+			 <a class="button is-primary" th:text="#{post.new}" th:href="@{/topic/{id}/edit(id=${topic.id})}" sec:authorize="isAuthenticated() and (hasRole('ADMIN') or principal.id == #vars.topic.getCreatedBy().getID())" th:text="#{topic.edit}"></a>
+			 <a sec:authorize="isAuthentivated()" th:style="${!isFollowing} ? 'dispaly:inline-flex': 'dispaly:none'" id="followBtn" class="button is-primary" th:text="#{topic.follow}"></a>
+			 <a sec:authorize="isAuthentivated()" th:style="${!isFollowing} ? 'display:inline-flex':'display:none'" id="unfollowBtn" class="Nutton is-primary" th:text="#{topic.unfollow}"></a>	
+			 
+			 <section class="mt-6">
+			 	<article class="media" th:each="post : ${post}">
+			 			<figure class="media-left">
+			 					<p class="image is-64x64"> <img class="is-circle" th:src="${post.createdBY.picture}"></p>
+			 			</figure>
+			 			<div class="media-content">
+			 				<div class="content">
+			 					<p>
+			 						<strong class="has-text-info" th:text="${topic.createdBy.username}"></strong>
+			 						<small class="" th:inline="text">le [[${topic.createdAt.toLocalString()}]]</small>
+			 					</p>
+			 					<p th:text="${post.content}"></p>
+			 				</div>
+			 				<nav class="level is-mobile">
+			 					<div class="level-left">
+			 						<a class="level-item">
+			 							<a th:href="@{/post/{id_post/update(id_post=${post.getId()})}}" sec:authorize="isAuthenticated() and (hasRole('ADMIN') or principal.id == #vars.post.getCreatedBy().getId())"></a>
+			 							<span class="icon is-meduim has-text-info"> <i class="far fa-lg fa-edit"></i></span>
+			 						
+			 					</div>
+			 				</nav>
+			 			</div>
+			 	</article>
+			 </section>
+ 	</div>
+ </section>
+ 
+ </body>
