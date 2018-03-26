@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.miage.spring.exception.TopicNotFoundException;
 import com.miage.spring.model.Post;
 import com.miage.spring.model.Topic;
 import com.miage.spring.model.User;
@@ -53,6 +54,16 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void loadTestCreation(int maxCreate) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Post save(Post post, Long topicId) throws TopicNotFoundException {
+	Topic topic = topicRepository.getOne(topicId);
+	if (topic == null) {
+		throw new TopicNotFoundException("Con't find topic with id: " + topicId);
+	}
+	post.setTopic(topic);
+	return postRepository.save(post);
 	}
 
 }
