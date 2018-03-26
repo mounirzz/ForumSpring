@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
+import com.miage.spring.exception.ProjectNotFoundException;
 import com.miage.spring.model.Project;
 import com.miage.spring.model.Topic;
 import com.miage.spring.model.User;
@@ -54,6 +55,16 @@ public class TopicServiceImpl implements TopicService {
 	public void loadTestCreation(int maxCreate) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Topic save(Topic topic, Long projectId) throws ProjectNotFoundException {
+		Project project = projectRepository.getOne(projectId);
+		if (project == null) {
+			throw new ProjectNotFoundException("Can't find project with id: " +projectId);
+		}
+		topic.setProject(project);
+		return topicRepository.save(topic);
 	}
 
 }
