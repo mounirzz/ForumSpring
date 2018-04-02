@@ -21,4 +21,11 @@ public class ExceptionProfiler {
 		log.info("Exception time of method" + joinPoint.getSignature() + "is :" + time + "ms");
 		return procced ;
 	}
+	public Object logExceptionTime(ProceedingJoinPoint joinPoint) throws Throwable{
+		Long start = System.currentTimeMillis();
+		Object procced = joinPoint.procced();
+		Long time = System.currentTimeMillis() - start;
+		log.info("Exception time of method" + joinPoint.getSignature() + "is :" + time + "ms") ;
+		return procced ;
+	}
 }

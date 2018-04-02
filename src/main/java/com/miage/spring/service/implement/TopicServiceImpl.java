@@ -11,18 +11,18 @@ import com.miage.spring.model.Topic;
 import com.miage.spring.model.User;
 import com.miage.spring.repository.ProjectRepository;
 import com.miage.spring.repository.TopicRepository;
+import com.miage.spring.repository.UserRepository;
 import com.miage.spring.service.TopicService;
 @Service
 public class TopicServiceImpl implements TopicService {
 	
 	private TopicRepository topicRepository ;
 	private ProjectRepository projectRepository ;
-	// UserRepository Manque ....
+	private UserRepository userRepository ;
 	@Override
 	public Topic save(Topic topic) {
 		return topicRepository.save(topic);
 	}
-	// public Topic save(Topic topic, Long projectId) 
 
 	@Override
 	public Topic getOne(Long id) {
